@@ -34,7 +34,9 @@ steps:
     password:
       from_secret: psdocker
     repo: planesticud/personas_crud
-    tags: latest
+    tags:
+    - ${DRONE_COMMIT:0:7}
+    - latest
   when:
     branch: 
     - master
