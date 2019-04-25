@@ -2,7 +2,7 @@ kind: pipeline
 name: personas_crud
 
 steps:
-- name: build
+- name: construir
   image: golang:1.9
   commands:
   - go get -t
