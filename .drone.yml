@@ -1,16 +1,6 @@
 kind: pipeline
 name: personas_crud
 
-workspace:
-  base: /go
-  path: src/github.com/planesticud/${DRONE_REPO##planesticud/}
-  when:
-    branch: 
-    - master
-    - develop
-    event:
-    - push
-    
 steps:
 - name: build
   image: golang:1.9
@@ -18,13 +8,7 @@ steps:
   - go get -t
   - GOOS=linux GOARCH=amd64 go build -o main
   - go get -u gopkg.in/alecthomas/gometalinter.v1
-  - gometalinter.v1 --install     
-  when:
-    branch: 
-    - master
-    - develop
-    event:
-    - push
+  - gometalinter.v1 --install
             
 - name: publish-dockerhub  
   image: plugins/docker
@@ -35,12 +19,6 @@ steps:
       from_secret: psdocker
     repo: planesticud/personas_crud
     tags: latest
-  when:
-    branch: 
-    - master
-    - develop
-    event:
-    - push
 
 - name: notify
   image: appleboy/drone-telegram
@@ -62,8 +40,3 @@ steps:
     status:
     - failure
     - success
-    branch: 
-    - master
-    - develop
-    event:
-    - push
